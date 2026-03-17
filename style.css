@@ -1,0 +1,538 @@
+/* =========================================
+   1. VARIABLES (EARTHY / COFFEE PALETTE)
+   ========================================= */
+:root {
+    /* DARK MODE (Default) */
+    --primary: #2C1A18;       /* Coklat sangat gelap untuk Background */
+    --secondary: #4B2E2B;     /* Espresso (C4) untuk Cards/Sections */
+    --accent: #C08552;        /* Caramel (C2) untuk Tombol/Sorotan */
+    --accent-glow: rgba(192, 133, 82, 0.4);
+    --text-main: #FFF8F0;     /* Cream (C1) untuk Teks Utama */
+    --text-muted: #D3BCA8;    /* Coklat muda untuk Teks Sekunder */
+    
+    /* Variable khusus untuk efek kaca/gradasi */
+    --glass-bg: rgba(75, 46, 43, 0.6);
+    --glass-border: rgba(255, 248, 240, 0.05);
+    --gradient-start: #C08552;
+    --gradient-end: #EAC9AC;
+    
+    --font-heading: 'Poppins', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+/* Memberikan jarak aman saat di-scroll agar tidak tertutup Fixed Navbar */
+html {
+    scroll-padding-top: 90px; /* Menyesuaikan dengan tinggi navbar Anda */
+    scroll-behavior: smooth;  /* Membuat efek gulungannya menjadi mulus */
+}
+
+/* LIGHT MODE OVERRIDES */
+[data-theme="light"] {
+    --primary: #FFF8F0;       /* Cream (C1) untuk Background */
+    --secondary: #F4E7D8;     /* Cream sedikit gelap untuk Sections */
+    --accent: #8C5A3C;        /* Mocha (C3) untuk Tombol/Sorotan */
+    --accent-glow: rgba(140, 90, 60, 0.3);
+    --text-main: #4B2E2B;     /* Espresso (C4) untuk Teks Utama */
+    --text-muted: #8C5A3C;    /* Mocha (C3) untuk Teks Sekunder */
+    
+    --glass-bg: rgba(255, 255, 255, 0.5);
+    --glass-border: rgba(75, 46, 43, 0.1);
+    --gradient-start: #8C5A3C;
+    --gradient-end: #C08552;
+}
+
+/* =========================================
+   2. BASE STYLES & UTILITIES
+   ========================================= */
+body {
+    background-color: var(--primary);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    transition: background-color 0.4s ease, color 0.4s ease;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--text-main);
+}
+
+p.text-muted, span.text-muted, div.text-muted {
+    color: var(--text-muted) !important;
+}
+
+.section-padding { padding-top: 100px; padding-bottom: 100px; }
+
+/* Utilities Fixes */
+.text-info { color: var(--accent) !important; }
+.bg-info { background-color: var(--accent) !important; color: #FFF8F0 !important; }
+.btn-info, .btn-primary { background-color: var(--accent) !important; border-color: var(--accent) !important; color: #FFF8F0 !important; }
+.btn-outline-info { color: var(--accent); border-color: var(--accent); }
+.btn-outline-info:hover { background-color: var(--accent); color: #FFF8F0; }
+.bg-secondary-dark { background-color: var(--secondary); transition: background-color 0.4s ease; }
+.cursor-pointer { cursor: pointer; }
+
+/* Menimpa warna biru bawaan bootstrap pada badge */
+.border-info { border-color: var(--accent) !important; color: var(--accent) !important;}
+.badge.text-dark { color: #FFF8F0 !important; }
+
+/* Typography Gradients */
+.text-gradient {
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Loader */
+.loader-container {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--primary); z-index: 9999;
+    display: flex; justify-content: center; align-items: center;
+    transition: opacity 0.5s ease;
+}
+
+/* =========================================
+   3. GLASSMORPHISM & CARD FIXES
+   ========================================= */
+/* Memperbaiki masalah teks Card tidak terbaca di Dark Mode */
+.glass-card, .card {
+    background: var(--glass-bg) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border) !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.4s ease;
+    color: var(--text-main) !important;
+}
+
+.glass-card:hover, .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    border-color: var(--accent) !important;
+}
+
+/* Memperbaiki form input */
+.glass-input {
+    background-color: var(--primary) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--glass-border) !important;
+}
+.glass-input:focus {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 10px var(--accent-glow) !important;
+}
+.glass-input::placeholder {
+    color: var(--text-muted) !important;
+}
+
+/* Memperbaiki Navbar */
+.navbar {
+    background: var(--primary) !important;
+    border-bottom: 1px solid var(--glass-border);
+}
+.navbar.scrolled { padding: 10px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+.nav-link { color: var(--text-main) !important; font-weight: 500; font-size: 0.9rem; }
+.nav-link:hover { color: var(--accent) !important; }
+
+.navbar-brand {
+    color: var(--text-main) !important;
+    transition: color 0.4s ease;
+}
+
+.navbar-brand:hover {
+    color: var(--accent) !important;
+}
+
+/* Buttons & Glow */
+.btn-glow { transition: all 0.3s ease; }
+.btn-glow:hover { box-shadow: 0 0 20px var(--accent-glow); transform: translateY(-2px); }
+.shadow-glow { box-shadow: 0 0 15px var(--accent-glow); }
+
+/* Scroll Indicator */
+.mouse {
+    width: 26px; height: 42px;
+    border: 2px solid var(--text-muted);
+    border-radius: 15px; position: relative;
+}
+.wheel {
+    width: 4px; height: 8px; background: var(--text-muted);
+    border-radius: 2px; position: absolute;
+    top: 6px; left: 50%; transform: translateX(-50%);
+    animation: scroll 1.5s infinite;
+}
+@keyframes scroll {
+    0% { top: 6px; opacity: 1; }
+    100% { top: 20px; opacity: 0; }
+}
+
+/* Timeline */
+.timeline::before {
+    content: ''; position: absolute;
+    top: 0; bottom: 0; left: 6px;
+    width: 2px; background: rgba(56, 189, 248, 0.2);
+}
+.timeline-dot { width: 14px; height: 14px; z-index: 1; }
+
+/* Filtering */
+.filter-btn {
+    background: transparent; border: none;
+    color: var(--text-muted); font-weight: 600;
+    padding: 8px 16px; border-radius: 20px;
+    transition: all 0.3s;
+}
+.filter-btn.active, .filter-btn:hover {
+    background: rgba(56, 189, 248, 0.1);
+    color: var(--accent);
+}
+
+/* Masonry Grid */
+.masonry-grid { column-count: 2; column-gap: 1.5rem; }
+.masonry-item { break-inside: avoid; overflow: hidden; border-radius: 0.5rem; }
+.masonry-item img { transition: transform 0.5s ease; width: 100%; }
+.masonry-item:hover img { transform: scale(1.05); }
+
+@media (min-width: 992px) { .masonry-grid { column-count: 3; } }
+
+/* Lightbox */
+.lightbox {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9); z-index: 10000;
+}
+.max-vh-90 { max-height: 90vh; }
+.max-vw-90 { max-width: 90vw; }
+
+/* =========================================
+   4. CONTACT SECTION FIXES
+   ========================================= */
+
+/* Memperbaiki warna teks link portofolio agar menyesuaikan tema */
+#contact a.text-white {
+    color: var(--text-main) !important;
+    transition: color 0.3s ease;
+}
+
+#contact a.text-white:hover {
+    color: var(--accent) !important;
+}
+
+/* Memperbaiki warna tombol Social Media (LinkedIn, GitHub, IG) */
+.social-icon {
+    background-color: var(--secondary) !important; /* Mengganti warna hitam pekat menjadi warna sekunder tema */
+    color: var(--accent) !important;               /* Warna logo menggunakan warna aksen (karamel/mocha) */
+    border: 1px solid var(--glass-border);
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    background-color: var(--accent) !important;
+    color: var(--primary) !important;
+    box-shadow: 0 5px 15px var(--accent-glow);
+    transform: translateY(-3px);
+}
+
+/* =========================================
+   5. PROFILE IMAGE ANIMATION
+   ========================================= */
+.profile-img-wrapper {
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    position: relative;
+    /* Memberikan bayangan dasar yang lembut */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+}
+
+/* Efek melayang, memutar sedikit, dan bersinar saat disentuh kursor */
+.profile-img-wrapper:hover {
+    transform: translateY(-10px) rotate(1.5deg);
+    box-shadow: 0 15px 35px var(--accent-glow);
+    border-color: var(--accent) !important;
+}
+
+.profile-img {
+    transition: filter 0.5s ease;
+    /* Sedikit menurunkan kontras saat diam agar menyatu dengan UI */
+    filter: brightness(0.9) contrast(1.05); 
+}
+
+/* Foto kembali tajam dan terang 100% saat di-hover */
+.profile-img-wrapper:hover .profile-img {
+    filter: brightness(1) contrast(1.1);
+}
+
+/* =========================================
+   6. BACK TO TOP BUTTON FIX
+   ========================================= */
+/* Mengubah warna ikon panah menjadi krem terang agar kontras dengan background coklat */
+#backToTop i {
+    color: #FFF8F0 !important; 
+    transition: color 0.3s ease;
+}
+
+/* (Opsional) Efek saat tombol disentuh/di-hover */
+#backToTop:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px var(--accent-glow);
+}
+
+/* =========================================
+   7. SKILLS BADGES COLOR FIX
+   ========================================= */
+
+/* 1. Badge bergaris (Technical Skills & kategori Creative Skills) */
+#skills .badge.bg-dark-subtle {
+    background-color: var(--primary) !important;  /* Mengikuti warna background utama */
+    border: 1px solid var(--accent) !important;   /* Garis tepi warna Mocha/Karamel */
+    color: var(--accent) !important;              /* Teks warna Mocha/Karamel */
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+/* Efek saat kursor menyentuh badge bergaris */
+#skills .badge.bg-dark-subtle:hover {
+    background-color: var(--accent) !important;
+    color: var(--primary) !important;
+    box-shadow: 0 5px 15px var(--accent-glow);
+    transform: translateY(-3px);
+}
+
+/* 2. Badge Tools (Premiere Pro, After Effects, dll) */
+#skills .badge.bg-secondary {
+    background-color: var(--secondary) !important; /* Menggunakan warna sekunder tema */
+    color: var(--text-main) !important;            /* Teks warna utama */
+    border: 1px solid var(--glass-border) !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+/* Efek saat kursor menyentuh badge Tools */
+#skills .badge.bg-secondary:hover {
+    background-color: var(--accent) !important;
+    color: var(--primary) !important;
+    border-color: var(--accent) !important;
+    box-shadow: 0 5px 15px var(--accent-glow);
+    transform: translateY(-3px);
+}
+
+/* 3. Menghilangkan sisa warna biru dan putih bawaan Bootstrap */
+#skills .border-primary { border-color: var(--accent) !important; }
+#skills .text-light { color: var(--accent) !important; }
+
+/* =========================================
+   8. IA MONOGRAM LOGO (CSS MASKING)
+   ========================================= */
+.ia-monogram-logo {
+    width: 50px;
+    height: 40px;
+    
+    /* 👇 INI ADALAH WARNA DEFAULT (SAAT TIDAK DISENTUH KURSOR) 👇 */
+    /* Saat ini menggunakan var(--text-main) yang berarti:
+       - Mode Terang = Warna Espresso (Coklat Gelap)
+       - Mode Gelap  = Warna Cream Terang
+    */
+    background-color: var(--accent); 
+    
+    /* Jika Anda ingin warna default-nya adalah coklat Caramel/Mocha, 
+       cukup ganti baris di atas menjadi: background-color: var(--accent); */
+
+    -webkit-mask: url('images/logo1.png') no-repeat center / contain;
+    mask: url('images/logo1.png') no-repeat center / contain;
+    
+    transition: background-color 0.4s ease, transform 0.3s ease;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* 👇 INI ADALAH WARNA SAAT DISENTUH KURSOR (HOVER) 👇 */
+.navbar-brand:hover .ia-monogram-logo {
+    transform: scale(1.08) rotate(3deg);
+    
+    /* Saat kursor menyentuh, warnanya berubah menjadi Caramel/Mocha */
+    background-color: var(--accent); 
+}
+
+/* --- LOGIKA KHUSUS MODE GELAP --- */
+[data-theme="dark"] .ia-monogram-logo {
+    /* Mengubah warna logo menjadi Krem Terang/Putih (warna teks utama) di mode gelap */
+    background-color: var(--text-main); 
+}
+
+/* --- LOGIKA HOVER DI MODE GELAP --- */
+[data-theme="dark"] .navbar-brand:hover .ia-monogram-logo {
+    /* Saat disentuh kursor di mode gelap, logo kembali memancarkan warna Karamel */
+    background-color: var(--accent); 
+}
+
+/* =========================================
+   9. PROJECT TAGS / LABELS COLOR FIX
+   ========================================= */
+/* Menyeragamkan semua warna tag di dalam Project Grid agar sesuai dengan palet Coffee */
+#project-grid .badge {
+    background-color: var(--accent) !important; /* Memaksa warna menjadi Karamel/Mocha dari tema Anda */
+    color: var(--primary) !important;           /* Menyesuaikan warna teks agar kontras dan mudah dibaca */
+    font-weight: 500;
+    padding: 0.5em 0.8em;
+    border: 1px solid transparent !important;
+    transition: all 0.3s ease;
+}
+
+/* (Opsional) Efek interaktif saat tag disentuh kursor */
+#project-grid .badge:hover {
+    background-color: transparent !important;
+    color: var(--accent) !important;
+    border: 1px solid var(--accent) !important;
+    transform: translateY(-2px);
+}
+
+/* =========================================
+   10. COMMUNITY PARALLAX CSS
+   ========================================= */
+.parallax-section {
+    position: relative;
+    /* Menentukan gambar latar belakang (pastikan foldernya benar) */
+    background-image: url('images/fotobackground.jpg');
+    
+    /* Inti dari Efek Parallax: background-attachment: fixed; */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    /* Mengunci tinggi minimum agar gambar paralaks terlihat jelas */
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Lapisan Gelap Transparan (Overlay) di atas gambar */
+.parallax-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.65); /* Atur kegelapan di sini (0.0 - 1.0) */
+    z-index: 1;
+}
+
+/* Konten teks yang berada di atas overlay */
+.parallax-content {
+    position: relative;
+    z-index: 2; /* Harus lebih tinggi dari .parallax-overlay */
+}
+
+/* Memastikan teks tetap putih dan kontras */
+#community-parallax .text-white-50 {
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* --- Pengaturan Responsif untuk HP --- */
+/* Matikan efek paralaks di HP karena terkadang menyebabkan masalah performa atau tampilan */
+@media (max-width: 768px) {
+    .parallax-section {
+        background-attachment: scroll; /* Gambar akan ikut di-scroll seperti biasa di HP */
+        min-height: auto;
+        padding-top: 80px !important;
+        padding-bottom: 80px !important;
+    }
+}
+
+/* Mengubah warna ikon garis tiga FontAwesome di mode terang */
+[data-theme="light"] .navbar-toggler i.text-white {
+    color: var(--text-main) !important; 
+}
+
+/* Sedikit garis tepi pada tombol agar lebih manis */
+[data-theme="light"] .navbar-toggler {
+    border-color: rgba(75, 46, 43, 0.2);
+}
+
+/* =========================================
+   MOBILE NAVBAR STYLING (RESPONSIVE)
+   ========================================= */
+
+@media (max-width: 991px) {
+    /* Mengatur kontainer menu dropdown */
+    .navbar-collapse {
+        background-color: var(--primary); /* Mengikuti warna background sesuai tema aktif */
+        padding: 1rem 1.5rem;
+        border-radius: 0 0 1rem 1rem; /* Melengkungkan sudut bawah */
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Memberi bayangan agar menonjol dari konten di bawahnya */
+        margin-top: 10px; /* Memberi jarak dari tombol hamburger */
+        border: 1px solid var(--glass-border);
+        border-top: none;
+    }
+
+    /* Mengatur jarak dan perataan teks tiap menu */
+    .navbar-nav .nav-item {
+        text-align: center; /* Teks di tengah */
+        margin-bottom: 0.5rem;
+        border-bottom: 1px solid rgba(192, 133, 82, 0.1); /* Garis pemisah tipis warna karamel */
+        padding-bottom: 0.5rem;
+    }
+
+    /* Menghilangkan garis pemisah di elemen terakhir (tombol tema) */
+    .navbar-nav .nav-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+        margin-top: 1rem; /* Jarak ekstra untuk tombol tema */
+    }
+
+    /* Memperbesar area klik dan mengatur font menu */
+    .nav-link {
+        padding: 0.8rem !important;
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+    
+    /* Tombol ganti tema diposisikan di tengah */
+    #theme-toggle {
+        width: 45px;
+        height: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto; /* Rahasia meratakan elemen ke tengah */
+    }
+}
+
+/* Membuat ikon hamburger otomatis gelap di mode terang, dan terang di mode gelap */
+.menu-icon {
+    color: var(--text-main) !important;
+    font-size: 1.5rem;
+}
+
+/* Memperbaiki warna kotak border tombolnya agar menyesuaikan */
+.navbar-toggler {
+    border-color: var(--glass-border) !important;
+}
+
+/* =========================================
+   DARK MODE FIX: KARTU SERTIFIKASI & TEKS
+   ========================================= */
+
+/* 1. Menerangkan teks tanggal dan penerbit (yang menggunakan text-muted) di mode gelap */
+[data-theme="dark"] .text-muted,
+[data-theme="dark"] .text-secondary {
+    color: #d1d5db !important; /* Berubah menjadi abu-abu terang yang elegan */
+}
+
+/* 2. Memperbaiki tombol Kredensial (garis dan teks) agar menyala di mode gelap */
+[data-theme="dark"] .btn-outline-dark,
+[data-theme="dark"] .btn-outline-secondary {
+    color: #f8f9fa !important; /* Teks tombol jadi putih/krem terang */
+    border-color: #f8f9fa !important; /* Garis tepi tombol jadi terang */
+}
+
+/* 3. Efek saat tombol Kredensial disorot (hover) di mode gelap */
+[data-theme="dark"] .btn-outline-dark:hover,
+[data-theme="dark"] .btn-outline-secondary:hover {
+    background-color: #f8f9fa !important;
+    color: #212529 !important; /* Teks kembali gelap agar kontras dengan background tombol */
+}
+
+/* 4. Jika ada teks yang terkunci dengan text-dark, paksa menjadi terang */
+[data-theme="dark"] .text-dark {
+    color: #f8f9fa !important;
+}
