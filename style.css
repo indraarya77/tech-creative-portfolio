@@ -364,21 +364,30 @@ p.text-muted, span.text-muted, div.text-muted {
 /* =========================================
    9. PROJECT TAGS / LABELS COLOR FIX
    ========================================= */
-/* Menyeragamkan semua warna tag di dalam Project Grid agar sesuai dengan palet Coffee */
-#project-grid .badge {
-    background-color: var(--accent) !important; /* Memaksa warna menjadi Karamel/Mocha dari tema Anda */
-    color: var(--primary) !important;           /* Menyesuaikan warna teks agar kontras dan mudah dibaca */
+/* Kategori Utama (Top Badge di dalam card) */
+#project-grid .category-badge {
+    background-color: var(--accent) !important;
+    color: var(--primary) !important;
     font-weight: 500;
     padding: 0.5em 0.8em;
     border: 1px solid transparent !important;
     transition: all 0.3s ease;
 }
 
-/* (Opsional) Efek interaktif saat tag disentuh kursor */
-#project-grid .badge:hover {
-    background-color: transparent !important;
-    color: var(--accent) !important;
-    border: 1px solid var(--accent) !important;
+/* Tech Stack Badge (Meniru gaya Professional Tools) */
+#project-grid .tech-badge {
+    background-color: var(--secondary) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--glass-border) !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+/* Efek saat cursor menyentuh Tech Stack Badge */
+#project-grid .tech-badge:hover {
+    background-color: var(--accent) !important;
+    color: var(--primary) !important;
+    border-color: var(--accent) !important;
     transform: translateY(-2px);
 }
 
@@ -535,4 +544,36 @@ p.text-muted, span.text-muted, div.text-muted {
 /* 4. Jika ada teks yang terkunci dengan text-dark, paksa menjadi terang */
 [data-theme="dark"] .text-dark {
     color: #f8f9fa !important;
+}
+
+/* =========================================
+   10. GALLERY HOVER EFFECTS
+   ========================================= */
+.gallery-item .gallery-img {
+    transition: transform 0.5s ease;
+}
+
+.gallery-item:hover .gallery-img {
+    transform: scale(1.08);
+}
+
+.gallery-overlay {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+
+/* Memastikan teks overlay juga memiliki sedikit animasi */
+.gallery-overlay h5, .gallery-overlay small {
+    transform: translateY(15px);
+    transition: transform 0.4s ease;
+}
+
+.gallery-item:hover .gallery-overlay h5, 
+.gallery-item:hover .gallery-overlay small {
+    transform: translateY(0);
 }
